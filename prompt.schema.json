@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GuardIA Prompt Metadata",
+  "type": "object",
+  "required": ["id", "version", "task", "owner", "risk_level"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "task": {"type": "string"},
+    "owner": {"type": "string"},
+    "risk_level": {"enum": ["baixo", "medio", "alto", "critico"]}
+  },
+  "additionalProperties": false
+}

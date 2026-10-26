@@ -1,0 +1,26 @@
+name: prompt-check
+
+on:
+  pull_request:
+    paths:
+      - "prompt-*.md"
+      - "evals.jsonl"
+      - "prompt.schema.json"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar arquivos obrigatórios
+        shell: bash
+        run: |
+          test -f prompt-sistema-base.md
+          test -f prompt-resumo-v1.md
+          test -f prompt-perguntas-v2.md
+          test -f evals.jsonl
+          test -f prompt.schema.json
+      - name: Procurar segredos óbvios
+        shell: bash
+        run: |
+          ! grep -n -E "(sk-[A-Za-z0-9]{20,}|BEGIN PRIVATE KEY|password=)" prompt-*.md evals.jsonl prompt.schema.json
